@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles.css';
 
 const NavBar = ({ user, setUser }) => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -39,17 +38,10 @@ const NavBar = ({ user, setUser }) => {
         <ul className="navbar-links">
           <li><Link to="/home">Home</Link></li>
           {user ? (
-            <li className="navbar-dropdown">
-              <button onClick={() => setDropdownOpen(!dropdownOpen)}>
-                Settings
-              </button>
-              {dropdownOpen && (
-                <div className="dropdown-menu">
-                  <button onClick={handleLogout}>Logout</button>
-                  <button onClick={handleDeleteAccount}>Delete Account</button>
-                </div>
-              )}
-            </li>
+            <>
+              <li><button className="nav-button" onClick={handleLogout}>Logout</button></li>
+              <li><button className="nav-button" onClick={handleDeleteAccount}>Delete Account</button></li>
+            </>
           ) : (
             <>
               <li><Link to="/signin">Sign In</Link></li>
@@ -63,5 +55,8 @@ const NavBar = ({ user, setUser }) => {
 };
 
 export default NavBar;
+
+
+
 
 

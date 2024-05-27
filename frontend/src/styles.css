@@ -46,51 +46,17 @@ body {
   margin-left: 1rem;
 }
 
-.navbar-links a {
+.navbar-links a, .nav-button {
   color: white;
   text-decoration: none;
   font-size: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
-.navbar-links a:hover {
+.navbar-links a:hover, .nav-button:hover {
   text-decoration: underline;
-}
-
-.navbar-dropdown {
-  position: relative;
-}
-
-.navbar-dropdown button {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  width: 150px;
-}
-
-.dropdown-menu button {
-  background: none;
-  border: none;
-  padding: 10px;
-  width: 100%;
-  text-align: left;
-  cursor: pointer;
-}
-
-.dropdown-menu button:hover {
-  background-color: #f0f0f0;
 }
 
 /* Hero section styles */
@@ -114,6 +80,27 @@ body {
 .hero-section p {
   font-size: 1.5rem;
   margin: 10px 0 0;
+}
+
+.search-bar {
+  margin-top: 20px;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+  width: 80%;
+  max-width: 500px;
+}
+
+/* Featured section styles */
+.featured-section {
+  padding: 20px;
+  text-align: left;
+}
+
+.featured-section h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
 }
 
 /* Footer styles */
@@ -285,6 +272,8 @@ body {
 .property-details p {
   font-size: 1.2em;
 }
+
+
 
 
 

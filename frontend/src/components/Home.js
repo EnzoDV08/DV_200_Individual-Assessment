@@ -7,6 +7,8 @@ import '../styles.css';
 
 const Home = ({ user, setUser }) => {
   const [properties, setProperties] = useState([]);
+  const [search, setSearch] = useState('');
+  const [filteredProperties, setFilteredProperties] = useState([]);
 
   useEffect(() => {
     const fetchProperties = async () => {
@@ -16,17 +18,36 @@ const Home = ({ user, setUser }) => {
     fetchProperties();
   }, []);
 
+  useEffect(() => {
+    setFilteredProperties(
+      properties.filter(property =>
+        property.title.toLowerCase().includes(search.toLowerCase()) ||
+        property.location.toLowerCase().includes(search.toLowerCase())
+      )
+    );
+  }, [search, properties]);
+
   return (
     <div className="home-container">
       <NavBar user={user} setUser={setUser} />
       <div className="hero-section">
         <h1>Find Your Dream Home</h1>
         <p>Explore the best properties in your area</p>
+        <input
+          type="text"
+          className="search-bar"
+          placeholder="Search properties..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
       </div>
-      <div className="properties-container">
-        {properties.map((property) => (
-          <PropertyCard key={property._id} property={property} />
-        ))}
+      <div className="featured-section">
+        <h2>Featured Properties</h2>
+        <div className="properties-container">
+          {filteredProperties.map((property) => (
+            <PropertyCard key={property._id} property={property} />
+          ))}
+        </div>
       </div>
       <Footer />
     </div>
@@ -34,6 +55,9 @@ const Home = ({ user, setUser }) => {
 };
 
 export default Home;
+
+
+
 
 
 
