@@ -1,9 +1,10 @@
 import express from 'express';
 import Property from '../models/Property.js';
-import axios from 'axios'; // Added import for axios
+import axios from 'axios';
 
 const router = express.Router();
 
+// Get all properties
 router.get('/', async (req, res) => {
   try {
     const properties = await Property.find();
@@ -13,17 +14,22 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Create a new property
 router.post('/', async (req, res) => {
   const { title, description, price, location, imageUrl, createdBy } = req.body;
+  console.log('Request to add property:', req.body); // Log request body
   try {
     const newProperty = new Property({ title, description, price, location, imageUrl, createdBy });
     const savedProperty = await newProperty.save();
+    console.log('Property saved:', savedProperty); // Log saved property
     res.status(201).json(savedProperty);
   } catch (err) {
+    console.error('Error saving property:', err); // Log error
     res.status(500).json({ message: err.message });
   }
 });
 
+// Get property by ID
 router.get('/:id', async (req, res) => {
   try {
     const property = await Property.findById(req.params.id);
@@ -33,26 +39,33 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// New route to get property details from Zillow API
-router.get('/zillow/:zpid', async (req, res) => {
-  const { zpid } = req.params;
-  const options = {
-    method: 'GET',
-    url: 'https://zillow-com1.p.rapidapi.com/property',
-    params: { zpid: zpid },
-    headers: {
-      'x-rapidapi-key': 'a6e7df9308msh4e56b7f7325928cp1c7c78jsnc83765063508',
-      'x-rapidapi-host': 'zillow-com1.p.rapidapi.com'
-    }
-  };
-
+// Get properties by user ID
+router.get('/user/:userId', async (req, res) => {
+  console.log('Fetching properties for user:', req.params.userId); // Log user ID
   try {
-    const response = await axios.request(options);
-    res.json(response.data);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+    const properties = await Property.find({ createdBy: req.params.userId });
+    console.log('Properties found:', properties); // Log found properties
+    res.json(properties);
+  } catch (err) {
+    console.error('Error fetching properties:', err); // Log error
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// Delete a property by ID
+router.delete('/:id', async (req, res) => {
+  try {
+    await Property.findByIdAndDelete(req.params.id);
+    res.status(200).json({ message: 'Property deleted' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 });
 
 export default router;
+
+
+
+
+
 

@@ -7,29 +7,27 @@ const SignUp = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      setError('Passwords do not match');
+    if (!username || !email || !password) {
+      setError('Please provide username, email, and password');
       return;
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/users/register', {
-        username,
-        email,
-        password,
-      });
-      console.log(response.data);
-      navigate('/signin'); // Redirect to sign-in page upon successful registration
+      const response = await axios.post('http://localhost:5000/users/register', { username, email, password });
+      if (response.data.token) {
+        localStorage.setItem('token', response.data.token);
+        navigate('/signin');
+      } else {
+        setError('Sign up failed');
+      }
     } catch (err) {
-      setError('Registration failed. Please try again.');
-      console.error(err);
+      console.error('Error during sign up:', err.response ? err.response.data : err);
+      setError('Sign up failed. Please try again.');
     }
   };
 
@@ -60,28 +58,11 @@ const SignUp = () => {
         </div>
         <div className="mb-3">
           <input
-            type={showPassword ? 'text' : 'password'}
+            type="password"
             className="form-control"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <button
-            type="button"
-            onClick={() => setShowPassword(!showPassword)}
-            className="btn btn-link"
-          >
-            {showPassword ? 'Hide' : 'Show'}
-          </button>
-        </div>
-        <div className="mb-3">
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
         </div>
@@ -95,6 +76,9 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
+
+
 
 
 

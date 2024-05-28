@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles.css';
 
@@ -8,6 +8,7 @@ const NavBar = ({ user, setUser }) => {
 
   const handleLogout = () => {
     setUser(null);
+    localStorage.removeItem('token');
     navigate('/signin');
   };
 
@@ -17,12 +18,14 @@ const NavBar = ({ user, setUser }) => {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
+          'x-auth-token': localStorage.getItem('token'),
         },
         body: JSON.stringify({ email: user.email }),
       });
       const result = await response.json();
       if (response.ok) {
         setUser(null);
+        localStorage.removeItem('token');
         navigate('/signup');
       } else {
         console.error(result.message);
@@ -35,6 +38,34 @@ const NavBar = ({ user, setUser }) => {
   const handleToggle = () => {
     setMenuOpen(!menuOpen);
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token && !user) {
+      // Fetch user profile if token is available and user is not set
+      const fetchUserProfile = async () => {
+        try {
+          const response = await fetch('http://localhost:5000/users/profile', {
+            headers: {
+              'x-auth-token': token,
+            },
+          });
+          if (response.ok) {
+            const data = await response.json();
+            setUser(data);
+          } else {
+            localStorage.removeItem('token');
+            navigate('/signin');
+          }
+        } catch (err) {
+          console.error('Error fetching user profile:', err);
+          localStorage.removeItem('token');
+          navigate('/signin');
+        }
+      };
+      fetchUserProfile();
+    }
+  }, [user, setUser, navigate]);
 
   return (
     <nav className="navbar">
@@ -53,6 +84,12 @@ const NavBar = ({ user, setUser }) => {
             </li>
             {user ? (
               <>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/sell-property" onClick={() => setMenuOpen(false)}>Sell Property</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/my-properties" onClick={() => setMenuOpen(false)}>My Properties</Link>
+                </li>
                 <li className="nav-item dropdown">
                   <button className="nav-link dropdown-toggle" onClick={handleToggle}>Account</button>
                   <div className="dropdown-menu">
@@ -79,6 +116,16 @@ const NavBar = ({ user, setUser }) => {
 };
 
 export default NavBar;
+
+
+
+
+
+
+
+
+
+
 
 
 
