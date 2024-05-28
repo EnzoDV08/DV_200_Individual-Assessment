@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles.css';
 
 const NavBar = ({ user, setUser }) => {
   const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = () => {
     setUser(null);
@@ -31,30 +32,58 @@ const NavBar = ({ user, setUser }) => {
     }
   };
 
+  const handleToggle = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <h1 className="navbar-logo">Real Estate</h1>
-        <ul className="navbar-links">
-          <li><Link to="/home">Home</Link></li>
-          {user ? (
-            <>
-              <li><button className="nav-button" onClick={handleLogout}>Logout</button></li>
-              <li><button className="nav-button" onClick={handleDeleteAccount}>Delete Account</button></li>
-            </>
-          ) : (
-            <>
-              <li><Link to="/signin">Sign In</Link></li>
-              <li><Link to="/signup">Sign Up</Link></li>
-            </>
-          )}
-        </ul>
+        <Link className="navbar-logo" to="/home">Real Estate</Link>
+        <button className="navbar-toggle" type="button" onClick={handleToggle}>
+          ☰
+        </button>
+        <div className={`navbar-links ${menuOpen ? 'active' : ''}`}>
+          <ul>
+            <li className="nav-item">
+              <Link className="nav-link" to="/home" onClick={() => setMenuOpen(false)}>Home</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/properties" onClick={() => setMenuOpen(false)}>Property List</Link>
+            </li>
+            {user ? (
+              <>
+                <li className="nav-item dropdown">
+                  <button className="nav-link dropdown-toggle" onClick={handleToggle}>Account</button>
+                  <div className="dropdown-menu">
+                    <button className="dropdown-item" onClick={() => { handleLogout(); setMenuOpen(false); }}>Logout</button>
+                    <button className="dropdown-item" onClick={() => { handleDeleteAccount(); setMenuOpen(false); }}>Delete Account</button>
+                  </div>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/signin" onClick={() => setMenuOpen(false)}>Sign In</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/signup" onClick={() => setMenuOpen(false)}>Sign Up</Link>
+                </li>
+              </>
+            )}
+          </ul>
+        </div>
       </div>
     </nav>
   );
 };
 
 export default NavBar;
+
+
+
+
+
 
 
 

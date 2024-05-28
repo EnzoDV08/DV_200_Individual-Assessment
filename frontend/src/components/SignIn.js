@@ -25,26 +25,32 @@ const SignIn = ({ setUser }) => {
   };
 
   return (
-    <div className="auth-container">
-      <form className="auth-form" onSubmit={handleSubmit}>
+    <div className="auth-container d-flex justify-content-center align-items-center vh-100">
+      <form className="auth-form p-4 rounded shadow" onSubmit={handleSubmit}>
         <h2>Sign In</h2>
-        {error && <p className="error-message">{error}</p>}
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Sign In</button>
-        <p className="switch-auth">
+        {error && <p className="error-message text-danger">{error}</p>}
+        <div className="mb-3">
+          <input
+            type="email"
+            className="form-control"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <input
+            type="password"
+            className="form-control"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit" className="btn btn-primary w-100">Sign In</button>
+        <p className="switch-auth mt-3">
           Don't have an account? <Link to="/signup">Sign up</Link>
         </p>
       </form>
@@ -53,6 +59,7 @@ const SignIn = ({ setUser }) => {
 };
 
 export default SignIn;
+
 
 
 

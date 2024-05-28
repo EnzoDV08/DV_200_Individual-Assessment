@@ -34,27 +34,34 @@ const SignUp = () => {
   };
 
   return (
-    <div className="auth-container">
-      <form className="auth-form" onSubmit={handleSubmit}>
+    <div className="auth-container d-flex justify-content-center align-items-center vh-100">
+      <form className="auth-form p-4 rounded shadow" onSubmit={handleSubmit}>
         <h2>Sign Up</h2>
-        {error && <p className="error-message">{error}</p>}
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <div className="password-container">
+        {error && <p className="error-message text-danger">{error}</p>}
+        <div className="mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <input
+            type="email"
+            className="form-control"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-3">
           <input
             type={showPassword ? 'text' : 'password'}
+            className="form-control"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -63,20 +70,23 @@ const SignUp = () => {
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="toggle-password"
+            className="btn btn-link"
           >
             {showPassword ? 'Hide' : 'Show'}
           </button>
         </div>
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Sign Up</button>
-        <p className="switch-auth">
+        <div className="mb-3">
+          <input
+            type="password"
+            className="form-control"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit" className="btn btn-primary w-100">Sign Up</button>
+        <p className="switch-auth mt-3">
           Already have an account? <Link to="/signin">Sign in</Link>
         </p>
       </form>
@@ -85,6 +95,7 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
 
 
 

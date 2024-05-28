@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import '../styles.css';
 
@@ -9,8 +8,14 @@ const PropertyDetails = () => {
 
   useEffect(() => {
     const fetchProperty = async () => {
-      const response = await axios.get(`http://localhost:5000/properties/${id}`);
-      setProperty(response.data);
+      // Simulating an API call
+      const properties = [
+        { _id: '1', title: 'Modern Family Home', price: 350000, location: 'Los Angeles, CA', image: 'https://via.placeholder.com/400x300', description: 'A beautiful modern family home in Los Angeles.' },
+        { _id: '2', title: 'Luxury Villa', price: 1200000, location: 'Beverly Hills, CA', image: 'https://via.placeholder.com/400x300', description: 'A luxurious villa in Beverly Hills.' },
+        // Add more properties here as needed
+      ];
+      const property = properties.find((prop) => prop._id === id);
+      setProperty(property);
     };
     fetchProperty();
   }, [id]);
@@ -19,14 +24,15 @@ const PropertyDetails = () => {
 
   return (
     <div className="property-details">
-      <img src={property.imageUrl} alt={property.title} />
+      <img src={property.image} alt={property.title} />
       <h2>{property.title}</h2>
       <p>{property.description}</p>
       <p>{property.location}</p>
-      <p>${property.price}</p>
+      <p className="property-price">${property.price.toLocaleString()}</p>
     </div>
   );
 };
 
 export default PropertyDetails;
+
 

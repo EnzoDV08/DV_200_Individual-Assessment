@@ -5,7 +5,7 @@ import '../styles.css';
 const PropertyCard = ({ property }) => {
   return (
     <div className="property-card">
-      <img src={property.imageUrl} alt={property.title} className="property-image" />
+      <img src={property.image} className="property-image" alt={property.title} />
       <div className="property-card-content">
         <h2>{property.title}</h2>
         <p className="property-price">${property.price.toLocaleString()}</p>
@@ -17,4 +17,11 @@ const PropertyCard = ({ property }) => {
 };
 
 export default PropertyCard;
+
+
+
+
+
+
+
 
