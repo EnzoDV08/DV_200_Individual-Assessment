@@ -9,6 +9,9 @@ const SellProperty = ({ user }) => {
   const [price, setPrice] = useState('');
   const [location, setLocation] = useState('');
   const [imageUrl, setImageUrl] = useState('');
+  const [agentName, setAgentName] = useState('');
+  const [agentPhone, setAgentPhone] = useState('');
+  const [agentEmail, setAgentEmail] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -17,10 +20,21 @@ const SellProperty = ({ user }) => {
 
     try {
       const token = localStorage.getItem('token');
-      // eslint-disable-next-line no-unused-vars
       const response = await axios.post(
         'http://localhost:5000/properties',
-        { title, description, price, location, imageUrl, createdBy: user._id },
+        {
+          title,
+          description,
+          price,
+          location,
+          imageUrl,
+          createdBy: user._id,
+          agent: {
+            name: agentName,
+            phone: agentPhone,
+            email: agentEmail,
+          },
+        },
         {
           headers: {
             'x-auth-token': token,
@@ -88,6 +102,36 @@ const SellProperty = ({ user }) => {
             required
           />
         </div>
+        <div className="form-group">
+          <label htmlFor="agentName">Agent Name</label>
+          <input
+            type="text"
+            id="agentName"
+            value={agentName}
+            onChange={(e) => setAgentName(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="agentPhone">Agent Phone</label>
+          <input
+            type="text"
+            id="agentPhone"
+            value={agentPhone}
+            onChange={(e) => setAgentPhone(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="agentEmail">Agent Email</label>
+          <input
+            type="email"
+            id="agentEmail"
+            value={agentEmail}
+            onChange={(e) => setAgentEmail(e.target.value)}
+            required
+          />
+        </div>
         <button type="submit" className="btn btn-primary">Create Property</button>
       </form>
     </div>
@@ -95,6 +139,7 @@ const SellProperty = ({ user }) => {
 };
 
 export default SellProperty;
+
 
 
 

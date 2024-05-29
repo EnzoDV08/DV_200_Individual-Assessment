@@ -8,7 +8,7 @@ import Home from './components/Home';
 import PropertyDetails from './components/PropertyDetails';
 import PropertyList from './components/PropertyList';
 import NavBar from './components/NavBar';
-import SellProperty from './components/SellProperty';
+import SellProperty from './components/TempSellProperty';
 import MyProperties from './components/MyProperties';
 import ForgotPassword from './components/ForgotPassword'; // Import ForgotPassword component
 import ResetPassword from './components/ResetPassword'; // Import ResetPassword component

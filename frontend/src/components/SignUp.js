@@ -1,4 +1,3 @@
-// frontend/src/components/SignUp.js
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
@@ -22,7 +21,9 @@ const SignUp = () => {
       return;
     }
     try {
+      console.log('Sending data:', { username, email, password });
       const response = await axios.post('http://localhost:5000/users/register', { username, email, password });
+      console.log('Response:', response.data);
       if (response.data.user) {
         navigate('/signin');
       } else {
@@ -30,7 +31,7 @@ const SignUp = () => {
       }
     } catch (err) {
       setError('Sign up failed. Please try again.');
-      console.error('Error during sign up:', err.response ? err.response.data : err.message); // Log error details
+      console.error('Error during sign up:', err.response ? err.response.data : err.message);
     }
   };
 
@@ -95,6 +96,8 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
+
 
 
 

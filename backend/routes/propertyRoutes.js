@@ -7,7 +7,7 @@ const router = express.Router();
 // Get all properties
 router.get('/', async (req, res) => {
   try {
-    const properties = await Property.find();
+    const properties = await Property.find().populate('createdBy', 'username email');
     res.json(properties);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -16,15 +16,28 @@ router.get('/', async (req, res) => {
 
 // Create a new property
 router.post('/', authMiddleware, async (req, res) => {
-  const { title, description, price, location, imageUrl, createdBy } = req.body;
-  console.log('Request to add property:', req.body); // Log request body
+  const { title, description, price, location, imageUrl, agent } = req.body;
+  console.log('Request to add property:', req.body);
+
+  if (!title || !description || !price || !location || !imageUrl || !agent || !agent.name || !agent.phone || !agent.email) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
+
   try {
-    const newProperty = new Property({ title, description, price, location, imageUrl, createdBy });
+    const newProperty = new Property({
+      title,
+      description,
+      price,
+      location,
+      imageUrl,
+      createdBy: req.user.userId,
+      agent,
+    });
     const savedProperty = await newProperty.save();
-    console.log('Property saved:', savedProperty); // Log saved property
+    console.log('Property saved:', savedProperty);
     res.status(201).json(savedProperty);
   } catch (err) {
-    console.error('Error saving property:', err); // Log error
+    console.error('Error saving property:', err);
     res.status(500).json({ message: err.message });
   }
 });
@@ -33,9 +46,13 @@ router.post('/', authMiddleware, async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const property = await Property.findById(req.params.id).populate('createdBy', 'username email');
+    if (!property) {
+      return res.status(404).json({ message: 'Property not found' });
+    }
     res.json(property);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error('Error fetching property by ID:', err);
+    res.status(500).json({ message: 'Server error' });
   }
 });
 
@@ -64,6 +81,8 @@ router.delete('/:id', authMiddleware, async (req, res) => {
 });
 
 export default router;
+
+
 
 
 

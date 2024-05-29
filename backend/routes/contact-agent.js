@@ -1,57 +1,54 @@
 import express from 'express';
-import nodemailer from 'nodemailer';
+import mongoose from 'mongoose';
 import Contact from '../models/Contact.js';
 import authMiddleware from '../middleware/auth.js';
 
 const router = express.Router();
 
+// Contact agent route
 router.post('/contact-agent', authMiddleware, async (req, res) => {
   const { propertyId, agentId, date } = req.body;
-  const userId = req.user.userId;
 
-  // Log the received data
-  console.log('Received contact-agent request:', { userId, propertyId, agentId, date });
+  // Log incoming request
+  console.log('Incoming request:', req.body);
 
-  if (!userId || !propertyId || !agentId || !date) {
-    console.error('Missing required fields:', { userId, propertyId, agentId, date });
+  // Validate property ID
+  if (!mongoose.Types.ObjectId.isValid(propertyId)) {
+    return res.status(400).json({ message: 'Invalid property ID' });
+  }
+
+  // Check if all fields are provided
+  if (!propertyId || !agentId || !date) {
     return res.status(400).json({ message: 'All fields are required' });
   }
 
   try {
-    const contact = new Contact({
-      userId,
+    // Check if the date is already booked for the property
+    const existingContact = await Contact.findOne({ propertyId, date });
+    if (existingContact) {
+      return res.status(400).json({ message: 'Date already booked' });
+    }
+
+    // Create a new contact
+    const newContact = new Contact({
+      userId: req.user._id,
       propertyId,
       agentId,
       date,
     });
 
-    await contact.save();
-
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL,
-        pass: process.env.EMAIL_PASSWORD,
-      },
-    });
-
-    const mailOptions = {
-      from: process.env.EMAIL,
-      to: agentId,
-      subject: 'New Property Contact Request',
-      text: `You have a new contact request for property ID: ${propertyId} on ${date}.`,
-    };
-
-    await transporter.sendMail(mailOptions);
-
-    res.status(200).json({ message: 'Contact request submitted successfully' });
+    await newContact.save();
+    res.status(201).json(newContact);
   } catch (error) {
-    console.error('Error during contact agent process:', error);
+    console.error('Error booking contact:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });
 
 export default router;
+
+
+
 
 
 

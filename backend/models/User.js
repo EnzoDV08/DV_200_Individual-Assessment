@@ -10,9 +10,19 @@ const UserSchema = new Schema({
   bio: { type: String, default: '' },
 }, { collection: 'users' });
 
+UserSchema.pre('remove', async function(next) {
+  try {
+    await mongoose.model('Property').deleteMany({ createdBy: this._id });
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
 const User = model('User', UserSchema);
 
 export default User;
+
 
 
 

@@ -12,6 +12,7 @@ const router = express.Router();
 // Registration Route
 router.post('/register', async (req, res) => {
   const { username, email, password } = req.body;
+  console.log('Received data:', req.body);
 
   try {
     const existingUser = await User.findOne({ email });
