@@ -1,8 +1,8 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import axios from 'axios';
 import { Carousel } from 'react-bootstrap';
 import { FaArrowLeft } from 'react-icons/fa';
 import '../styles.css';
@@ -15,6 +15,7 @@ const PropertyDetails = () => {
   const [bookingError, setBookingError] = useState('');
   const [bookingSuccess, setBookingSuccess] = useState('');
   const navigate = useNavigate();
+
 
   useEffect(() => {
     const fetchProperty = async () => {
@@ -52,7 +53,8 @@ const PropertyDetails = () => {
   }, [id]);
 
  
-   const handleContactAgent = () => {
+    
+     const handleContactAgent = () => {
     const token = localStorage.getItem('token');
     if (!token) {
       alert('You need to sign in to contact the agent.');
@@ -68,12 +70,6 @@ const PropertyDetails = () => {
     if (response === 'continue') {
       try {
         const token = localStorage.getItem('token');
-        console.log('Sending contact request with:', {
-          propertyId: property._id,
-          agentId: property.agent.email,
-          date: contactDate.toISOString().split('T')[0],
-          token,
-        });
         await axios.post('http://localhost:5000/contact/contact-agent', {
           propertyId: property._id,
           agentId: property.agent.email,

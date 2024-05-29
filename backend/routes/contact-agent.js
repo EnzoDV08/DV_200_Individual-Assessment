@@ -9,14 +9,15 @@ router.post('/contact-agent', authMiddleware, async (req, res) => {
   const { propertyId, agentId, date } = req.body;
   const userId = req.user.userId;
 
+  // Log the received data
+  console.log('Received contact-agent request:', { userId, propertyId, agentId, date });
+
   if (!userId || !propertyId || !agentId || !date) {
     console.error('Missing required fields:', { userId, propertyId, agentId, date });
     return res.status(400).json({ message: 'All fields are required' });
   }
 
   try {
-    console.log('Creating new contact with:', { userId, propertyId, agentId, date });
-
     const contact = new Contact({
       userId,
       propertyId,
@@ -51,6 +52,7 @@ router.post('/contact-agent', authMiddleware, async (req, res) => {
 });
 
 export default router;
+
 
 
 
