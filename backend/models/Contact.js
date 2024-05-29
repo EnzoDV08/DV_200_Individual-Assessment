@@ -1,24 +1,41 @@
-// models/Contact.js
 import mongoose from 'mongoose';
 
-const ContactSchema = new mongoose.Schema({
-  propertyId: {
-    type: String,
+const contactSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
+    ref: 'User'
+  },
+  propertyId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'Property'
   },
   agentId: {
     type: String,
-    required: true,
+    required: true
   },
   date: {
     type: Date,
-    required: true,
-  },
+    required: true
+  }
 });
 
-const Contact = mongoose.model('Contact', ContactSchema);
+const Contact = mongoose.model('Contact', contactSchema);
 
 export default Contact;
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

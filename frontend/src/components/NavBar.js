@@ -1,3 +1,4 @@
+// frontend/src/components/NavBar.js
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles.css';
@@ -20,7 +21,6 @@ const NavBar = ({ user, setUser }) => {
           'Content-Type': 'application/json',
           'x-auth-token': localStorage.getItem('token'),
         },
-        body: JSON.stringify({ email: user.email }),
       });
       const result = await response.json();
       if (response.ok) {
@@ -116,6 +116,9 @@ const NavBar = ({ user, setUser }) => {
 };
 
 export default NavBar;
+
+
+
 
 
 

@@ -448,12 +448,17 @@ body {
   align-items: center;
 }
 
-.toggle-password {
-  background: none;
-  border: none;
+.password-container input {
+  width: 100%;
+  padding-right: 40px;
+}
+
+.password-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
   cursor: pointer;
-  color: #007bff;
-  margin-left: 0.5rem;
 }
 
 .auth-form button {
@@ -470,10 +475,19 @@ body {
   background-color: #0056b3;
 }
 
+/* frontend/src/styles.css */
+
 .error-message {
   color: red;
-  margin-bottom: 1rem;
+  margin-top: 10px;
 }
+
+.success-message {
+  color: green;
+  margin-top: 10px;
+}
+
+
 
 .switch-auth {
   margin-top: 1rem;
@@ -546,7 +560,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.7); /* Darken the overlay for better contrast */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -554,17 +568,29 @@ body {
 }
 
 .modal-content {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
+  background: #333; /* Dark background for better contrast */
+  color: white; /* White text color */
+  padding: 30px;
+  border-radius: 10px;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  width: 100%;
+}
+
+.modal-content h4 {
+  color: white; /* Ensure the header text is white */
+  margin-bottom: 20px;
+}
+
+.modal-content p {
+  color: white; /* Ensure the paragraph text is white */
+  margin-bottom: 20px;
 }
 
 .modal-buttons {
   display: flex;
   justify-content: space-around;
-  margin-top: 20px;
 }
 
 .modal-buttons .btn {
@@ -576,10 +602,9 @@ body {
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
 }
 
 .sell-property-container h2 {
@@ -587,30 +612,53 @@ body {
   margin-bottom: 20px;
 }
 
-.sell-property-form .form-group {
+.sell-property-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
   margin-bottom: 15px;
 }
 
-.sell-property-form .form-control {
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
 }
 
-.sell-property-form .btn-primary {
+.form-group input,
+.form-group textarea {
   width: 100%;
   padding: 10px;
-  border-radius: 4px;
-  border: none;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+}
+
+.form-group textarea {
+  resize: vertical;
+  height: 100px;
+}
+
+.btn {
+  width: 100%;
+  padding: 10px;
   background-color: #007bff;
-  color: #fff;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
   cursor: pointer;
 }
 
-.sell-property-form .btn-primary:hover {
+.btn:hover {
   background-color: #0056b3;
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 10px;
+  text-align: center;
 }
 
 /* Styles for MyProperties */
@@ -665,7 +713,59 @@ body {
   background: #c82333;
 }
 
+/* frontend/src/styles.css */
+/* frontend/src/styles.css */
+.auth-container {
+  max-width: 400px;
+  margin: auto;
+}
 
+.auth-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.password-container {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.password-container input {
+  width: 100%;
+  padding-right: 40px;
+}
+
+.password-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  color: #007bff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.back-button:hover {
+  text-decoration: underline;
+}
+
+/* In your styles.css file */
+.back-arrow {
+  font-size: 24px;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
 
 
 

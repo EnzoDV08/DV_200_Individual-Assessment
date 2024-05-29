@@ -1,6 +1,6 @@
 import express from 'express';
 import Property from '../models/Property.js';
-import axios from 'axios';
+import authMiddleware from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 });
 
 // Create a new property
-router.post('/', async (req, res) => {
+router.post('/', authMiddleware, async (req, res) => {
   const { title, description, price, location, imageUrl, createdBy } = req.body;
   console.log('Request to add property:', req.body); // Log request body
   try {
@@ -32,7 +32,7 @@ router.post('/', async (req, res) => {
 // Get property by ID
 router.get('/:id', async (req, res) => {
   try {
-    const property = await Property.findById(req.params.id);
+    const property = await Property.findById(req.params.id).populate('createdBy', 'username email');
     res.json(property);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -41,20 +41,21 @@ router.get('/:id', async (req, res) => {
 
 // Get properties by user ID
 router.get('/user/:userId', async (req, res) => {
-  console.log('Fetching properties for user:', req.params.userId); // Log user ID
   try {
     const properties = await Property.find({ createdBy: req.params.userId });
-    console.log('Properties found:', properties); // Log found properties
     res.json(properties);
   } catch (err) {
-    console.error('Error fetching properties:', err); // Log error
     res.status(500).json({ message: err.message });
   }
 });
 
 // Delete a property by ID
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authMiddleware, async (req, res) => {
   try {
+    const property = await Property.findById(req.params.id);
+    if (property.createdBy.toString() !== req.user.userId) {
+      return res.status(401).json({ message: 'Not authorized to delete this property' });
+    }
     await Property.findByIdAndDelete(req.params.id);
     res.status(200).json({ message: 'Property deleted' });
   } catch (err) {
@@ -63,6 +64,8 @@ router.delete('/:id', async (req, res) => {
 });
 
 export default router;
+
+
 
 
 

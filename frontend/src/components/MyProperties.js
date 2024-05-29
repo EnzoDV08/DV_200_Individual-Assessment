@@ -9,7 +9,12 @@ const MyProperties = ({ user }) => {
     const fetchProperties = async () => {
       if (user && user._id) {
         try {
-          const response = await axios.get(`http://localhost:5000/properties/user/${user._id}`);
+          const token = localStorage.getItem('token');
+          const response = await axios.get(`http://localhost:5000/properties/user/${user._id}`, {
+            headers: {
+              'x-auth-token': token,
+            },
+          });
           setProperties(response.data);
         } catch (error) {
           console.error('Error fetching properties:', error);
@@ -22,7 +27,12 @@ const MyProperties = ({ user }) => {
 
   const handleDelete = async (propertyId) => {
     try {
-      await axios.delete(`http://localhost:5000/properties/${propertyId}`);
+      const token = localStorage.getItem('token');
+      await axios.delete(`http://localhost:5000/properties/${propertyId}`, {
+        headers: {
+          'x-auth-token': token,
+        },
+      });
       setProperties(properties.filter(property => property._id !== propertyId));
     } catch (error) {
       console.error('Error deleting property:', error);
@@ -55,6 +65,11 @@ const MyProperties = ({ user }) => {
 };
 
 export default MyProperties;
+
+
+
+
+
 
 
 

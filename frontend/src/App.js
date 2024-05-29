@@ -1,5 +1,7 @@
+// frontend/src/App.js
 import React, { useState, useEffect } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
+import axios from 'axios'; // Import axios
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import Home from './components/Home';
@@ -8,7 +10,8 @@ import PropertyList from './components/PropertyList';
 import NavBar from './components/NavBar';
 import SellProperty from './components/SellProperty';
 import MyProperties from './components/MyProperties';
-import axios from 'axios';
+import ForgotPassword from './components/ForgotPassword'; // Import ForgotPassword component
+import ResetPassword from './components/ResetPassword'; // Import ResetPassword component
 import './styles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -38,11 +41,13 @@ function App() {
       <NavBar user={user} setUser={setUser} />
       <Routes>
         <Route path="/signin" element={<SignIn setUser={setUser} />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signup" element={<SignUp setUser={setUser} />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} /> {/* Add ForgotPassword route */}
+        <Route path="/reset-password/:resetToken" element={<ResetPassword />} /> {/* Add ResetPassword route */}
         <Route path="/home" element={<Home user={user} setUser={setUser} />} />
         <Route path="/properties/:id" element={<PropertyDetails />} />
         <Route path="/properties" element={<PropertyList />} />
-        <Route path="/sell-property" element={<SellProperty />} />
+        <Route path="/sell-property" element={<SellProperty user={user} />} />
         <Route path="/my-properties" element={<MyProperties user={user} />} />
         <Route path="/" element={<Navigate to="/home" />} />
       </Routes>
@@ -51,6 +56,11 @@ function App() {
 }
 
 export default App;
+
+
+
+
+
 
 
 

@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import '../styles.css';
 
 const SignIn = ({ setUser }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -15,13 +18,19 @@ const SignIn = ({ setUser }) => {
       const response = await axios.post('http://localhost:5000/users/signin', { email, password });
       if (response.data.user) {
         setUser(response.data.user);
+        localStorage.setItem('token', response.data.token);
         navigate('/home');
       } else {
         setError('Sign in failed');
       }
     } catch (err) {
       setError('Sign in failed. Please try again.');
+      console.error('Error during sign in:', err.response ? err.response.data : err.message);
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -36,16 +45,26 @@ const SignIn = ({ setUser }) => {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+        <div className="password-container">
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <FontAwesomeIcon 
+            icon={showPassword ? faEyeSlash : faEye} 
+            className="password-icon" 
+            onClick={togglePasswordVisibility} 
+          />
+        </div>
         <button type="submit">Sign In</button>
         <p className="switch-auth">
           Don't have an account? <Link to="/signup">Sign up</Link>
+        </p>
+        <p className="switch-auth">
+          <Link to="/forgot-password">Forgot Password?</Link>
         </p>
       </form>
     </div>
@@ -53,6 +72,9 @@ const SignIn = ({ setUser }) => {
 };
 
 export default SignIn;
+
+
+
 
 
 

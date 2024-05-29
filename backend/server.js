@@ -4,7 +4,7 @@ import cors from 'cors';
 import connectDB from './db.js';
 import userRoutes from './routes/userRoutes.js';
 import propertyRoutes from './routes/propertyRoutes.js';
-import contactRoutes from './routes/contact-agent.js'; // Correct import
+import contactRoutes from './routes/contactRoutes.js'; // Correct import
 
 dotenv.config();
 

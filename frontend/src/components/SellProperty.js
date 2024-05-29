@@ -9,35 +9,41 @@ const SellProperty = ({ user }) => {
   const [price, setPrice] = useState('');
   const [location, setLocation] = useState('');
   const [imageUrl, setImageUrl] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      await axios.post('http://localhost:5000/properties', {
-        title,
-        description,
-        price,
-        location,
-        imageUrl,
-        createdBy: user._id,
-      });
+      const token = localStorage.getItem('token');
+      // eslint-disable-next-line no-unused-vars
+      const response = await axios.post(
+        'http://localhost:5000/properties',
+        { title, description, price, location, imageUrl, createdBy: user._id },
+        {
+          headers: {
+            'x-auth-token': token,
+          },
+        }
+      );
       navigate('/my-properties');
-    } catch (error) {
-      console.error('There was an error creating the property!', error);
+    } catch (err) {
+      setError('There was an error creating the property!');
+      console.error('There was an error creating the property!', err);
     }
   };
 
   return (
     <div className="sell-property-container">
-      <h2>Sell Your Property</h2>
-      <form className="sell-property-form" onSubmit={handleSubmit}>
+      <h2>Sell Property</h2>
+      {error && <p className="error-message">{error}</p>}
+      <form onSubmit={handleSubmit} className="sell-property-form">
         <div className="form-group">
           <label htmlFor="title">Title</label>
           <input
             type="text"
             id="title"
-            className="form-control"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
@@ -47,7 +53,6 @@ const SellProperty = ({ user }) => {
           <label htmlFor="description">Description</label>
           <textarea
             id="description"
-            className="form-control"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
@@ -58,7 +63,6 @@ const SellProperty = ({ user }) => {
           <input
             type="number"
             id="price"
-            className="form-control"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             required
@@ -69,7 +73,6 @@ const SellProperty = ({ user }) => {
           <input
             type="text"
             id="location"
-            className="form-control"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
             required
@@ -80,19 +83,20 @@ const SellProperty = ({ user }) => {
           <input
             type="text"
             id="imageUrl"
-            className="form-control"
             value={imageUrl}
             onChange={(e) => setImageUrl(e.target.value)}
             required
           />
         </div>
-        <button type="submit" className="btn btn-primary">Submit</button>
+        <button type="submit" className="btn btn-primary">Create Property</button>
       </form>
     </div>
   );
 };
 
 export default SellProperty;
+
+
 
 
 
