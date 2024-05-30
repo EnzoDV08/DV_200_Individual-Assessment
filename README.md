@@ -1,6 +1,9 @@
 # DV_200_Individual-Assessment
 Individual Assessment
 
+DV Video 
+https://drive.google.com/file/d/1FjQ3GOIAFrQRxcl8o506hP9gKLUfUD0R/view?usp=sharing
+
 Features
 User authentication and authorization
 Property listing and management
@@ -63,3 +66,7 @@ User Authentication and Authorization: Implemented using JWT.
 Search and Filtering Functionality: Allows users to search and filter properties based on various criteria.
 Pagination: Implemented for long lists of properties to improve performance and usability.
 Image Upload Functionality: Allows users to upload images for property listings.
+
+
+
+
