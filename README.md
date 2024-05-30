@@ -4,11 +4,17 @@ Individual Assessment
 DV Video 
 https://drive.google.com/file/d/1FjQ3GOIAFrQRxcl8o506hP9gKLUfUD0R/view?usp=sharing
 
+DV Folder
+[DV_200_Individual-Assessment-main.zip](https://github.com/EnzoDV08/DV_200_Individual-Assessment/files/15502817/DV_200_Individual-Assessment-main.zip)
+
+
+
 Features
 User authentication and authorization
 Property listing and management
 Contact agent functionality
-Search and filter properties
+Search and filter properties[DV_200_Individual-Assessment-main.zip](https://github.com/EnzoDV08/DV_200_Individual-Assessment/files/15502811/DV_200_Individual-Assessment-main.zip)
+
 Pagination for property lists
 Image upload for property listings
 
