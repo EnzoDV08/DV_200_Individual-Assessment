@@ -20,14 +20,14 @@ const SellProperty = ({ user }) => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post(
+      await axios.post(
         'http://localhost:5000/properties',
         {
           title,
           description,
           price,
           location,
-          imageUrl,
+          imageUrls: [imageUrl], // Ensure imageUrls is an array
           createdBy: user._id,
           agent: {
             name: agentName,
@@ -139,6 +139,11 @@ const SellProperty = ({ user }) => {
 };
 
 export default SellProperty;
+
+
+
+
+
 
 
 

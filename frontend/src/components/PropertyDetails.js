@@ -328,7 +328,7 @@ const PropertyDetails = () => {
     fetchProperty();
   }, [id]);
 
-  const handleContactAgent = () => {
+const handleContactAgent = () => {
     const token = localStorage.getItem('token');
     if (!token) {
       alert('You need to sign in to contact the agent.');
@@ -367,62 +367,65 @@ const PropertyDetails = () => {
 
   if (!property) return <p>Loading...</p>;
 
-  return (
+ return (
     <div className="property-details">
-      <FaArrowLeft onClick={() => navigate(-1)} className="back-arrow" />
-      <Carousel>
-        {property.imageUrls &&
-          property.imageUrls.map((url, index) => (
-            <Carousel.Item key={index}>
-              <img className="d-block w-100" src={url} alt={`Slide ${index}`} />
-            </Carousel.Item>
-          ))}
-      </Carousel>
-      <h2>{property.title}</h2>
-      <p>{property.description}</p>
-      <p>{property.location}</p>
-      <p className="property-price">${property.price.toLocaleString()}</p>
+      <div className="property-card">
+        <FaArrowLeft onClick={() => navigate(-1)} className="card-back-arrow" />
+        <Carousel>
+          {property.imageUrls &&
+            property.imageUrls.map((url, index) => (
+              <Carousel.Item key={index}>
+                <img className="d-block w-100" src={url} alt={`Slide ${index}`} />
+              </Carousel.Item>
+            ))}
+        </Carousel>
+        <div className="property-card-content">
+          <h2>{property.title}</h2>
+          <p>{property.description}</p>
+          <p>{property.location}</p>
+          <p className="property-price">${property.price.toLocaleString()}</p>
 
-      {property.agent && (
-        <div className="agent-details">
-          <h3>Contact Agent</h3>
-          <p>Name: {property.agent.name}</p>
-          <p>Phone: {property.agent.phone}</p>
-          <p>Email: {property.agent.email}</p>
-          <DatePicker
-            selected={contactDate}
-            onChange={(date) => setContactDate(date)}
-            className="form-control"
-            dateFormat="yyyy-MM-dd"
-            minDate={new Date()}
-          />
-          <button onClick={handleContactAgent} className="btn btn-primary mt-2">
-            Contact Agent
-          </button>
-          {bookingError && <p className="error-message">{bookingError}</p>}
-          {bookingSuccess && <p className="success-message">{bookingSuccess}</p>}
-        </div>
-      )}
-
-      {showAlert && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h4>Confirm Contact</h4>
-            <p>Do you want to continue contacting the agent?</p>
-            <div className="modal-buttons">
-              <button onClick={() => handleAlertResponse('continue')} className="btn btn-primary">
-                Continue
+          {property.agent && (
+            <div className="agent-details">
+              <h3>Contact Agent</h3>
+              <p>Name: {property.agent.name}</p>
+              <p>Phone: {property.agent.phone}</p>
+              <p>Email: {property.agent.email}</p>
+              <DatePicker
+                selected={contactDate}
+                onChange={(date) => setContactDate(date)}
+                className="form-control"
+                dateFormat="yyyy-MM-dd"
+                minDate={new Date()}
+              />
+              <button onClick={handleContactAgent} className="btn btn-primary mt-2">
+                Contact Agent
               </button>
-              <button onClick={() => handleAlertResponse('cancel')} className="btn btn-secondary">
-                Cancel
-              </button>
+              {bookingError && <p className="error-message">{bookingError}</p>}
+              {bookingSuccess && <p className="success-message">{bookingSuccess}</p>}
             </div>
-          </div>
+          )}
+
+          {showAlert && (
+            <div className="modal-overlay">
+              <div className="modal-content">
+                <h4>Confirm Contact</h4>
+                <p>Do you want to continue contacting the agent?</p>
+                <div className="modal-buttons">
+                  <button onClick={() => handleAlertResponse('continue')} className="btn btn-primary">
+                    Continue
+                  </button>
+                  <button onClick={() => handleAlertResponse('cancel')} className="btn btn-secondary">
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };
 
 export default PropertyDetails;
-

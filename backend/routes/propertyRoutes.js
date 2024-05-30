@@ -7,7 +7,7 @@ const router = express.Router();
 // Get all properties
 router.get('/', async (req, res) => {
   try {
-    const properties = await Property.find().populate('createdBy', 'username email');
+    const properties = await Property.find();
     res.json(properties);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -16,10 +16,10 @@ router.get('/', async (req, res) => {
 
 // Create a new property
 router.post('/', authMiddleware, async (req, res) => {
-  const { title, description, price, location, imageUrl, agent } = req.body;
-  console.log('Request to add property:', req.body);
+  const { title, description, price, location, imageUrls, agent } = req.body; // Include agent in destructuring
 
-  if (!title || !description || !price || !location || !imageUrl || !agent || !agent.name || !agent.phone || !agent.email) {
+  // Check if all required fields are present
+  if (!title || !description || !price || !location || !imageUrls || !agent || !agent.name || !agent.phone || !agent.email) {
     return res.status(400).json({ message: 'All fields are required' });
   }
 
@@ -29,15 +29,13 @@ router.post('/', authMiddleware, async (req, res) => {
       description,
       price,
       location,
-      imageUrl,
-      createdBy: req.user.userId,
-      agent,
+      imageUrls,
+      createdBy: req.user.userId, // Use authenticated user's ID
+      agent, // Add agent details
     });
     const savedProperty = await newProperty.save();
-    console.log('Property saved:', savedProperty);
     res.status(201).json(savedProperty);
   } catch (err) {
-    console.error('Error saving property:', err);
     res.status(500).json({ message: err.message });
   }
 });
@@ -51,7 +49,6 @@ router.get('/:id', async (req, res) => {
     }
     res.json(property);
   } catch (err) {
-    console.error('Error fetching property by ID:', err);
     res.status(500).json({ message: 'Server error' });
   }
 });
@@ -81,6 +78,8 @@ router.delete('/:id', authMiddleware, async (req, res) => {
 });
 
 export default router;
+
+
 
 
 

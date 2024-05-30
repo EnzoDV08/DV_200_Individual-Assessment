@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import '../styles.css';
 
-const SignUp = () => {
+const SignUp = ({ setUser }) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -21,10 +21,13 @@ const SignUp = () => {
       return;
     }
     try {
-      console.log('Sending data:', { username, email, password });
-      const response = await axios.post('http://localhost:5000/users/register', { username, email, password });
-      console.log('Response:', response.data);
+      const response = await axios.post('http://localhost:5000/users/register', {
+        username,
+        email,
+        password,
+      });
       if (response.data.user) {
+        setUser(response.data.user);
         navigate('/signin');
       } else {
         setError('Sign up failed');
@@ -96,6 +99,7 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
 
 
 

@@ -49,38 +49,43 @@ const UserPropertyDetails = ({ user }) => {
 
   return (
     <div className="property-details">
-      <FaArrowLeft onClick={() => navigate(-1)} className="back-arrow" />
-      <Carousel>
-        {property.imageUrls &&
-          property.imageUrls.map((url, index) => (
-            <Carousel.Item key={index}>
-              <img className="d-block w-100" src={url} alt={`Slide ${index}`} />
-            </Carousel.Item>
-          ))}
-      </Carousel>
-      <h2>{property.title}</h2>
-      <p>{property.description}</p>
-      <p>{property.location}</p>
-      <p className="property-price">${property.price.toLocaleString()}</p>
+      <div className="card-with-arrow">
+        <FaArrowLeft onClick={() => navigate(-1)} className="back-arrow" />
+        <Carousel>
+          {property.imageUrls &&
+            property.imageUrls.map((url, index) => (
+              <Carousel.Item key={index}>
+                <img className="d-block w-100" src={url} alt={`Slide ${index}`} />
+              </Carousel.Item>
+            ))}
+        </Carousel>
+        <h2>{property.title}</h2>
+        <p>{property.description}</p>
+        <p>{property.location}</p>
+        <p className="property-price">${property.price.toLocaleString()}</p>
 
-      {property.agent && (
-        <div className="agent-details">
-          <h3>Contact Agent</h3>
-          <p>Name: {property.agent.name}</p>
-          <p>Phone: {property.agent.phone}</p>
-          <p>Email: {property.agent.email}</p>
-        </div>
-      )}
+        {property.agent && (
+          <div className="agent-details">
+            <h3>Contact Agent</h3>
+            <p>Name: {property.agent.name}</p>
+            <p>Phone: {property.agent.phone}</p>
+            <p>Email: {property.agent.email}</p>
+          </div>
+        )}
 
-      {user && user._id === property.createdBy && (
-        <button onClick={handleDelete} className="btn btn-danger mt-2">
-          Delete Property
-        </button>
-      )}
+        {user && user._id === property.createdBy && (
+          <button onClick={handleDelete} className="btn btn-danger mt-2">
+            Delete Property
+          </button>
+        )}
 
-      {error && <p className="error-message">{error}</p>}
+        {error && <p className="error-message">{error}</p>}
+      </div>
     </div>
   );
 };
 
 export default UserPropertyDetails;
+
+
+

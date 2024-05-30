@@ -350,8 +350,6 @@ body {
   min-width: 120px;
 }
 
-
-
 /* Property list styles */
 .property-list {
   padding: 40px 20px;
@@ -398,6 +396,7 @@ body {
 .property-item .btn-primary:hover {
   background-color: #0056b3;
 }
+
 /* Footer styles */
 .footer {
   background-color: #007bff;
@@ -475,8 +474,6 @@ body {
   background-color: #0056b3;
 }
 
-/* frontend/src/styles.css */
-
 .error-message {
   color: red;
   margin-top: 10px;
@@ -486,8 +483,6 @@ body {
   color: green;
   margin-top: 10px;
 }
-
-
 
 .switch-auth {
   margin-top: 1rem;
@@ -547,6 +542,10 @@ body {
 
 .agent-details p {
   margin: 5px 0;
+}
+
+.agent-details .form-control {
+  margin-bottom: 10px;
 }
 
 .agent-details .btn {
@@ -672,19 +671,55 @@ body {
   margin-bottom: 2rem;
 }
 
+/* Styles for the back arrow */
+/* Styles for the back arrow within the card */
+.card-back-arrow {
+  font-size: 24px;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+  color: #007bff; /* Arrow color */
+  background: white;
+  border-radius: 50%;
+  padding: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s, background-color 0.3s, color 0.3s;
+}
+
+.card-back-arrow:hover {
+  transform: scale(1.2);
+  background-color: #007bff;
+  color: white;
+}
+
+.back-arrow {
+  font-size: 24px;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+  color: white; /* Make the arrow visible on top of the image */
+}
+
+/* Property card styles */
 .property-card {
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
   margin-bottom: 1rem;
-  padding: 1rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative; /* Ensure relative positioning */
+  overflow: hidden; /* Ensure the arrow stays within the card */
 }
 
 .property-card img {
   width: 100%;
   height: auto;
-  border-radius: 4px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 
 .property-card h3 {
@@ -700,7 +735,7 @@ body {
   margin-top: 1rem;
   width: 100%;
   padding: 0.75rem;
-  background: #dc3545;
+  background: #007bff;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -713,8 +748,8 @@ body {
   background: #c82333;
 }
 
-/* frontend/src/styles.css */
-/* frontend/src/styles.css */
+
+/* Auth styles */
 .auth-container {
   max-width: 400px;
   margin: auto;
@@ -758,16 +793,102 @@ body {
   text-decoration: underline;
 }
 
-/* In your styles.css file */
-.back-arrow {
-  font-size: 24px;
-  cursor: pointer;
-  position: absolute;
-  top: 10px;
-  left: 10px;
+/* Splash screen styles */
+.splash-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f8f9fa;
 }
 
+.splash-screen h1 {
+  margin-top: 20px;
+  color: #007bff;
+}
 
+.splash-screen .loader {
+  margin-top: 20px;
+}
+
+/* custom-datepicker.css */
+
+/* Overall DatePicker style */
+.react-datepicker {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border: 1px solid #007bff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+/* Header */
+.react-datepicker__header {
+  background-color: #007bff;
+  border-bottom: 1px solid #0056b3;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.react-datepicker__current-month,
+.react-datepicker__day-name {
+  color: white;
+}
+
+.react-datepicker__day-name {
+  font-weight: bold;
+}
+
+/* Days */
+.react-datepicker__day {
+  color: #007bff;
+  border-radius: 50%;
+  width: 2.5rem;
+  line-height: 2.5rem;
+  margin: 0.2rem;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.react-datepicker__day--today {
+  font-weight: bold;
+  background-color: #007bff;
+  color: white;
+}
+
+.react-datepicker__day:hover {
+  background-color: #0056b3;
+  color: white;
+}
+
+.react-datepicker__day--selected {
+  background-color: #007bff;
+  color: white;
+}
+
+.react-datepicker__day--outside-month {
+  color: #ddd;
+}
+
+/* Navigation */
+.react-datepicker__navigation {
+  top: 10px;
+  line-height: 1.5rem;
+}
+
+.react-datepicker__navigation-icon {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0.45rem 0.45rem 0 0.45rem;
+}
+
+.react-datepicker__navigation-icon--previous {
+  border-color: transparent #fff transparent transparent;
+}
+
+.react-datepicker__navigation-icon--next {
+  border-color: transparent transparent transparent #fff;
+}
 
 
 

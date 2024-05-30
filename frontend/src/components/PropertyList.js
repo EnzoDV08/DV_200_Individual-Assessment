@@ -28,10 +28,10 @@ const PropertyList = () => {
           { _id: '14', title: 'Luxury Condo', price: 700000, location: 'Las Vegas, NV', imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCADLBvscohUTMYxOnwHakQWt9bfukFuh-8SlSlzoEZg&s' },
           { _id: '15', title: 'Riverside Cottage', price: 450000, location: 'Sacramento, CA', imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLqr8E3fxkh4Qwbe5aAdzng3ouadJEfW5tyXWftja_bg&s' },
           { _id: '16', title: 'Studio Apartment', price: 200000, location: 'Boston, MA', imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa2FNTdHSivY4PwUWajrf8xOgGM4e-fVGXFA&s' },
-          { _id: '17', title: 'Rustic Cabin', price: 350000, location: 'Asheville, NC', imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeZ5l4dl1MZzaFyoYOQexFHoCxoIO_vbINhQ&s' },
-          { _id: '18', title: 'Countryside Bungalow', price: 400000, location: 'Burlington, VT', imageUrl: 'https://dropinblog.net/34246798/files/featured/Lake_House.jpg' },
-          { _id: '19', title: 'Urban Loft', price: 380000, location: 'Philadelphia, PA', imageUrl: 'https://hips.hearstapps.com/hmg-prod/images/cayman-islands-villa-kempa-kai-2020-021-1616076929.jpg' },
-          { _id: '20', title: 'Lake House', price: 950000, location: 'Lake Tahoe, CA', imageUrl: 'https://assets.isu.pub/document-structure/230220111649-0dcb9ff5baa8c77674aa03d9c42b820f/v1/a63b8e8f6ba27ce9c004b9ebcd92663f.jpeg' }
+          { _id: '17', title: 'Rustic Cabin', price: 350000, location: 'Asheville, NC', imageUrl: 'https://cdn.onekindesign.com/wp-content/uploads/2019/08/Cozy-Rustic-Cabin-Yellowstone-Traditions-03-1-Kindesign.jpg' },
+          { _id: '18', title: 'Countryside Bungalow', price: 400000, location: 'Burlington, VT', imageUrl: 'https://via.placeholder.com/400x300' },
+          { _id: '19', title: 'Urban Loft', price: 380000, location: 'Philadelphia, PA', imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeZ5l4dl1MZzaFyoYOQexFHoCxoIO_vbINhQ&s' },
+          { _id: '20', title: 'Lake House', price: 950000, location: 'Lake Tahoe, CA', imageUrl: 'https://dropinblog.net/34246798/files/featured/Lake_House.jpg' }
         ];
         setProperties([...response.data, ...hardcodedProperties]);
       } catch (error) {
@@ -63,7 +63,7 @@ const PropertyList = () => {
         {filteredProperties.map((property) => (
           <div key={property._id} className="col-md-4 mb-4">
             <div className="property-item card">
-              <img src={property.imageUrl} className="card-img-top" alt={property.title} />
+              <img src={property.imageUrl || property.imageUrls[0]} className="card-img-top" alt={property.title} />
               <div className="card-body">
                 <h5 className="card-title">{property.title}</h5>
                 <p className="card-text">${property.price.toLocaleString()}</p>
@@ -79,6 +79,7 @@ const PropertyList = () => {
 };
 
 export default PropertyList;
+
 
 
 

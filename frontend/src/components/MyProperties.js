@@ -47,7 +47,7 @@ const MyProperties = ({ user }) => {
         <div className="property-list">
           {properties.map((property) => (
             <div key={property._id} className="property-card">
-              <img src={property.imageUrl} alt={property.title} className="property-image" />
+              <img src={property.imageUrls[0]} alt={property.title} className="property-image" /> {/* Access first image URL */}
               <div className="property-card-content">
                 <h3>{property.title}</h3>
                 <p>{property.description}</p>
@@ -67,6 +67,11 @@ const MyProperties = ({ user }) => {
 };
 
 export default MyProperties;
+
+
+
+
+
 
 
 

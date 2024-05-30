@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import '../styles.css';
 
-const SignIn = ({ setUser }) => {
+const SignIn = ({ setUser, setLoading }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -14,16 +14,22 @@ const SignIn = ({ setUser }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Start loading when form is submitted
     try {
       const response = await axios.post('http://localhost:5000/users/signin', { email, password });
       if (response.data.user) {
         setUser(response.data.user);
         localStorage.setItem('token', response.data.token);
-        navigate('/home');
+        setTimeout(() => { // Add delay for splash screen
+          navigate('/home');
+          setLoading(false); // Stop loading after navigation
+        }, 3000);
       } else {
+        setLoading(false); // Stop loading if sign-in fails
         setError('Sign in failed');
       }
     } catch (err) {
+      setLoading(false); // Stop loading if sign-in fails
       setError('Sign in failed. Please try again.');
       console.error('Error during sign in:', err.response ? err.response.data : err.message);
     }
@@ -72,6 +78,10 @@ const SignIn = ({ setUser }) => {
 };
 
 export default SignIn;
+
+
+
+
 
 
 
