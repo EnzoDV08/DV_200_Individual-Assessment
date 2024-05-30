@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import '../styles.css';
 
 const MyProperties = ({ user }) => {
@@ -46,12 +47,13 @@ const MyProperties = ({ user }) => {
         <div className="property-list">
           {properties.map((property) => (
             <div key={property._id} className="property-card">
-              <img src={property.imageUrl} alt={property.title} className="property-image"/>
+              <img src={property.imageUrl} alt={property.title} className="property-image" />
               <div className="property-card-content">
                 <h3>{property.title}</h3>
                 <p>{property.description}</p>
                 <p className="property-price">${property.price.toLocaleString()}</p>
                 <p>{property.location}</p>
+                <Link to={`/my-properties/${property._id}`} className="btn btn-primary">View Details</Link>
                 <button onClick={() => handleDelete(property._id)} className="btn btn-danger">Delete</button>
               </div>
             </div>
@@ -65,6 +67,7 @@ const MyProperties = ({ user }) => {
 };
 
 export default MyProperties;
+
 
 
 
