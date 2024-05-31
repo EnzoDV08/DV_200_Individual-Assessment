@@ -18,7 +18,7 @@ const PropertyDetails = () => {
 
   useEffect(() => {
     const fetchProperty = async () => {
-      // Replace this with actual API call to fetch property details
+      
      const properties = [
   {
     _id: '1',
@@ -346,7 +346,7 @@ const handleContactAgent = () => {
         const payload = {
           propertyId: property._id,
           agentId: property.agent.email,
-          date: contactDate.toISOString().split('T')[0], // Only use the date part
+          date: contactDate.toISOString().split('T')[0],
         };
         console.log('Sending contact request:', payload);
         await axios.post('http://localhost:5000/contact/contact-agent', payload, {

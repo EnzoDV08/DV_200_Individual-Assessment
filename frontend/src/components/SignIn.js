@@ -14,22 +14,22 @@ const SignIn = ({ setUser, setLoading }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // Start loading when form is submitted
+    setLoading(true); 
     try {
       const response = await axios.post('http://localhost:5000/users/signin', { email, password });
       if (response.data.user) {
         setUser(response.data.user);
         localStorage.setItem('token', response.data.token);
-        setTimeout(() => { // Add delay for splash screen
+        setTimeout(() => { 
           navigate('/home');
-          setLoading(false); // Stop loading after navigation
+          setLoading(false); 
         }, 3000);
       } else {
-        setLoading(false); // Stop loading if sign-in fails
+        setLoading(false); 
         setError('Sign in failed');
       }
     } catch (err) {
-      setLoading(false); // Stop loading if sign-in fails
+      setLoading(false); 
       setError('Sign in failed. Please try again.');
       console.error('Error during sign in:', err.response ? err.response.data : err.message);
     }

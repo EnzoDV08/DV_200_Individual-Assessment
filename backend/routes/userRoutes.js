@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 import crypto from 'crypto';
 import User from '../models/User.js';
-import Contact from '../models/Contact.js'; // Import the Contact model
+import Contact from '../models/Contact.js'; 
 import authMiddleware from '../middleware/auth.js';
 
 const router = express.Router();
@@ -95,7 +95,7 @@ router.post('/forgot-password', async (req, res) => {
 
     const resetToken = crypto.randomBytes(20).toString('hex');
     const resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex');
-    const resetPasswordExpire = Date.now() + 10 * 60 * 1000; // Token valid for 10 minutes
+    const resetPasswordExpire = Date.now() + 10 * 60 * 1000;
 
     user.resetPasswordToken = resetPasswordToken;
     user.resetPasswordExpire = resetPasswordExpire;

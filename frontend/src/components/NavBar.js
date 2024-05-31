@@ -1,4 +1,4 @@
-// frontend/src/components/NavBar.js
+
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles.css';
@@ -42,7 +42,7 @@ const NavBar = ({ user, setUser }) => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token && !user) {
-      // Fetch user profile if token is available and user is not set
+     
       const fetchUserProfile = async () => {
         try {
           const response = await fetch('http://localhost:5000/users/profile', {

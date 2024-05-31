@@ -4,7 +4,7 @@ import cors from 'cors';
 import connectDB from './db.js';
 import userRoutes from './routes/userRoutes.js';
 import propertyRoutes from './routes/propertyRoutes.js';
-import contactRoutes from './routes/contactRoutes.js'; // Correct import
+import contactRoutes from './routes/contactRoutes.js'; 
 
 dotenv.config();
 
@@ -18,7 +18,7 @@ app.use(express.json());
 
 app.use('/users', userRoutes);
 app.use('/properties', propertyRoutes);
-app.use('/contact', contactRoutes); // Correct endpoint
+app.use('/contact', contactRoutes); 
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

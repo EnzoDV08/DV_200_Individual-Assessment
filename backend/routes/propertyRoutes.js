@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 
 // Create a new property
 router.post('/', authMiddleware, async (req, res) => {
-  const { title, description, price, location, imageUrls, agent } = req.body; // Include agent in destructuring
+  const { title, description, price, location, imageUrls, agent } = req.body; 
 
   // Check if all required fields are present
   if (!title || !description || !price || !location || !imageUrls || !agent || !agent.name || !agent.phone || !agent.email) {
@@ -30,8 +30,8 @@ router.post('/', authMiddleware, async (req, res) => {
       price,
       location,
       imageUrls,
-      createdBy: req.user.userId, // Use authenticated user's ID
-      agent, // Add agent details
+      createdBy: req.user.userId, 
+      agent, 
     });
     const savedProperty = await newProperty.save();
     res.status(201).json(savedProperty);
